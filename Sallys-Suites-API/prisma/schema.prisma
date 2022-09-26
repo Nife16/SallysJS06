@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String
+  password    String
+  phoneNumber String
+  listings    Listing[]
+}
+
+model Agent {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String
+  password    String
+  phoneNumber String
+  listings    Listing[]
+}
+
+model Listing {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  price      Float
+  beds       Int
+  baths      Int
+  squareFeet Int
+  listDate   DateTime
+  isOnMarket Boolean
+  address    Address?
+  agent      Agent?    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  agentId    String?
+  User   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
+}
+
+model Address {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  streetNumber String
+  streetName   String
+  city         String
+  state        String
+  zipCode      String
+  listing      Listing? @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  listingId    String?  @unique
+}
