@@ -10,10 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Customer {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  email       String
+  email       String    @unique
   password    String
   phoneNumber String
   listings    Listing[]
@@ -39,8 +39,8 @@ model Listing {
   address    Address?
   agent      Agent?    @relation(fields: [agentId], references: [id], onDelete: Cascade)
   agentId    String?
-  User   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String?
+  Customer   Customer? @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId String?
 }
 
 model Address {

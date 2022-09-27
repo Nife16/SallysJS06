@@ -6,13 +6,30 @@ import { UserNotFoundError } from '@shared/errors';
 // **** Functions **** //
 
 /**
- * Get all users
+ * Get all customers
  */
-function getAll(): Promise<ICustomer[]> {
+function getAllCustomers(): Promise<ICustomer[]> {
   return customerRepo.getAll();
 }
+
+/**
+ * save customer
+ */
+ function saveCustomer(customer: ICustomer): Promise<ICustomer> {
+  return customerRepo.save(customer);
+}
+
+/**
+ * sign in customer
+ */
+ function signInCustomer(customer: ICustomer): Promise<ICustomer | null> {
+  return customerRepo.getByEmailAndPassword(customer);
+}
+
 // **** Export default **** //
 
 export default {
-    getAll,
+  getAllCustomers,
+  saveCustomer,
+  signInCustomer
 } as const;
