@@ -1,0 +1,24 @@
+.header {
+    height: 80px;
+    background-color: linen;
+}
+
+.header-right {
+    width: 100%;
+    justify-content: right;
+}
+
+.logo {
+    height: 100%;
+    width: auto;
+}
+
+.header-links {
+    margin: auto 30px;
+    text-decoration: none;
+    color: black;
+}
+
+.header-links:hover {
+    text-decoration: underline;
+}
