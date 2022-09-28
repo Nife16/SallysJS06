@@ -10,6 +10,7 @@ import 'express-async-errors';
 import apiRouter from './routes/api';
 import logger from 'jet-logger';
 import { CustomError } from '@shared/errors';
+import cors from 'cors'
 
 
 // **** Variables **** //
@@ -17,12 +18,15 @@ import { CustomError } from '@shared/errors';
 const app = express();
 
 
-// **** Set basic express settings ****# //
+// **** Set basic express settings **** //
 
 // Common middlewares
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+app.use(cors({
+  origin: '*'
+}));
 
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
