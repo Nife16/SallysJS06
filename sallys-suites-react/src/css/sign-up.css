@@ -5,3 +5,19 @@
     margin: auto;
     border-radius: 15px;
 }
+
+.signup-input {
+    margin: 20px !important;
+}
+
+.sign-up-submit {
+    background-color: black !important;
+}
+
+.house-icon {
+    margin: auto 0px;
+}
+
+.error-text {
+    margin: 10px 0px;
+}

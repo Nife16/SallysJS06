@@ -3,8 +3,9 @@ import { TextField, Button, Typography } from '@mui/material';
 import { useState } from "react";
 import { useNavigate } from 'react-router'
 import axios from "axios";
-import { red } from "@mui/material/colors";
-
+import '../../css/sign-up.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHouse } from '@fortawesome/free-solid-svg-icons'
 
 const SignUp = () => {
 
@@ -25,7 +26,7 @@ const SignUp = () => {
 
     const changeHandler = (event) => {
         const name = event.target.name;
-        const value = event.target.value.replace("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im", "");
+        const value = event.target.value;
         const tempCustomer = { ...customer };
         tempCustomer[name] = value;
         setCustomer(tempCustomer)
@@ -33,12 +34,16 @@ const SignUp = () => {
 
     const submitHandler = () => {
 
-        if(customer.password.length < 7) {
+        if (customer.password.length < 7) {
 
             setPasswordLengthCheck(false)
 
-        } else if (customer.password === customer.confirmPassword) {
-            axios.post("http://localhost:3000/api/customer/signUp", { customer: customer })
+        } else if (customer.password.length >= 7) {
+
+            setPasswordLengthCheck(true)
+
+            if(customer.password === customer.confirmPassword  ) {
+                axios.post("http://localhost:3000/api/customer/signUp", { customer: customer })
                 .then((response) => {
                     setErrorObj({
                         isError: false,
@@ -50,6 +55,19 @@ const SignUp = () => {
                 }).catch((error) => {
                     console.log(error)
                 })
+            } else {
+                setErrorObj({
+                    isError: true,
+                    helperText: "Passwords must match."
+                })
+            }
+            
+        }
+        if (customer.password === customer.confirmPassword) {
+            setErrorObj({
+                isError: false,
+                helperText: ""
+            })
         } else {
             setErrorObj({
                 isError: true,
@@ -79,34 +97,37 @@ const SignUp = () => {
             <Header />
             <div className="full-view flex-row justify-center">
                 <div className="flex-col">
-                    <div className="sign-up-box flex-col">
-                        <div className="flex-row">
+                    <div className="sign-up-box flex-col content-center">
+                        <div className="flex-row content-center">
                             <h2>Sign Up to Sallys Suites</h2>
                         </div>
-                        <div className="flex-row">
+                        <div className="flex-row  content-center">
                             <TextField
                                 id="filled-basic"
                                 value={customer.name}
                                 label="Name"
                                 variant="filled"
                                 onChange={changeHandler}
-                                name="name" />
+                                name="name" 
+                                className="signup-input" />
                             <TextField
                                 id="filled-basic"
                                 value={customer.phoneNumber}
                                 label="PhoneNumber"
                                 variant="filled"
                                 onChange={changeHandler}
-                                name="phoneNumber" />
-                        </div>
-                        <div className="flex-row">
+                                name="phoneNumber"
+                                className="signup-input" />
                             <TextField
                                 id="filled-basic"
                                 value={customer.email}
                                 label="Email"
                                 variant="filled"
                                 onChange={changeHandler}
-                                name="email" />
+                                name="email"
+                                className="signup-input" />
+                        </div>
+                        <div className="flex-row content-center">
                             <TextField
                                 id="filled-basic"
                                 value={customer.password}
@@ -115,9 +136,12 @@ const SignUp = () => {
                                 onChange={changeHandler}
                                 name="password"
                                 type="password"
+                                inputProps={{ minLength: 7, maxLength: 27 }}
                                 error={errObj.isError}
                                 helperText={errObj.helperText}
+                                className="signup-input"
                             />
+                            <FontAwesomeIcon icon={faHouse} className="house-icon" />
                             <TextField
                                 id="filled-basic"
                                 value={customer.confirmPassword}
@@ -127,11 +151,15 @@ const SignUp = () => {
                                 name="confirmPassword"
                                 type="password"
                                 error={errObj.isError}
+                                inputProps={{ minLength: 7, maxLength: 27 }}
                                 helperText={errObj.helperText}
+                                className="signup-input"
                             />
                         </div>
-                        <div className="flex-row">
-                            <Button variant="contained" onClick={submitHandler}>Submit</Button>
+                        <div className="flex-row content-center">
+                            <Button variant="contained" onClick={submitHandler} className="sign-up-submit" size="large">Submit</Button>
+                        </div>
+                        <div className="flex-row content-center error-text">
                             {passwordErrorMessage()}
                         </div>
                     </div>

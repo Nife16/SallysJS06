@@ -3,6 +3,7 @@ import { Request, Response, Router } from 'express';
 
 import { ParamMissingError } from '@shared/errors';
 import customerService from '@services/customer-service';
+import ICustomer from '@models/customer';
 
 
 // **** Variables **** //
@@ -45,6 +46,26 @@ router.get('/getAll', async (_: Request, res: Response) => {
     const { customer } = req.body
 
     const signedInCustomer = await customerService.signInCustomer(customer)
+
+    if(signedInCustomer === null) {
+        return res.status(BAD_REQUEST).json({message: "The email and password combination you sent was invalid."});
+    }
+   
+    return res.status(OK).json({customer: signedInCustomer});
+});
+
+/**
+ * Find customer by Email
+ */
+ router.get('/findByEmail/:email', async (req: Request, res: Response) => {
+
+    const { email } = req.params
+
+    const signedInCustomer = await customerService.findCustomerByEmail(email)
+
+    if(signedInCustomer === null) {
+        return res.status(BAD_REQUEST).json({message: "A user with that email does not exist."});
+    }
    
     return res.status(OK).json({customer: signedInCustomer});
 });

@@ -1,15 +1,15 @@
 import IAddress from "./address";
 
 
-interface IListing {
+interface IProperty {
     id: string,
-    address?: IAddress,
+    address?: IAddress | null,
     price: number,
     beds: number,
     baths: number,
-    squareFeet: number
-    listDate: Date
+    squareFeet: number,
+    listDate: Date,
     isOnMarket: boolean
 }
 
-export default IListing
+export default IProperty

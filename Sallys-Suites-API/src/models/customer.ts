@@ -1,4 +1,4 @@
-import IListing from "./property"
+import IProperty from "./property"
 
 
 interface ICustomer {
@@ -7,7 +7,7 @@ interface ICustomer {
     email: string,
     password: string,
     phoneNumber: string,
-    listings?: IListing[]
+    propertys?: IProperty[] | null
 }
 
 export default ICustomer

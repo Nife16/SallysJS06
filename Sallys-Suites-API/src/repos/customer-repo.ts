@@ -13,7 +13,7 @@ async function getAll(): Promise<ICustomer[]> {
 
     return await prisma.customer.findMany({
         include: {
-            listings: true
+            propertys: true
         }
     }
     )
@@ -43,7 +43,7 @@ async function getByEmailAndPassword(customer: ICustomer): Promise<ICustomer | n
 
     const foundCustomer = await prisma.customer.findUnique({
         include: {
-            listings: true
+            propertys: true
         },
         where: {
             email: customer.email
@@ -58,11 +58,30 @@ async function getByEmailAndPassword(customer: ICustomer): Promise<ICustomer | n
 
 }
 
+/**
+ * get customer by email 
+ */
+async function getByEmail(email: string): Promise<ICustomer | null> {
+
+    const foundCustomer = await prisma.customer.findUnique({
+        include: {
+            propertys: true
+        },
+        where: {
+            email: email
+        }
+    })
+
+    return foundCustomer
+
+}
+
 
 // **** Export default **** //
 
 export default {
     getAll,
     save,
-    getByEmailAndPassword
+    getByEmailAndPassword,
+    getByEmail
 } as const;

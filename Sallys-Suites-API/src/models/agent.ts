@@ -1,4 +1,4 @@
-import IListing from "./property"
+import IProperty from "./property"
 
 
 interface IAgent {
@@ -7,7 +7,7 @@ interface IAgent {
     email: string,
     password: string,
     phoneNumber: string,
-    listings: IListing[]
+    propertys?: IProperty[] | null
 }
 
 export default IAgent

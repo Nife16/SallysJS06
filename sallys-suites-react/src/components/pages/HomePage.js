@@ -1,11 +1,30 @@
+import axios from "axios"
+import { useEffect, useState } from "react"
 import Header from "../reusables/Header"
 
 
 const HomePage = () => {
 
+    const [customer, setCustomer] = useState({})
+
+    useEffect(() => {
+        if(localStorage.getItem("email") !== null) {
+
+            const email = localStorage.getItem("email")
+
+            axios.get(`http://localhost:3000/api/customer/findByEmail/${email}`)
+                .then((response) => {
+                    setCustomer(response.data)
+                }).catch((error) => {
+                    console.log(error)
+                })
+
+        }
+    }, [])
+
     return (
         <div className="flex-col full-view">
-            <Header />
+            <Header setCustomer={setCustomer} />
             <div className="main-content flex-row">
                 <div className="flex-col justify-center">
                     <img className="lebron-james" src="https://i.ytimg.com/vi/LfdWQnEYC_M/maxresdefault.jpg" />

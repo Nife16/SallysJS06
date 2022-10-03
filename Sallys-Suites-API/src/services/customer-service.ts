@@ -26,10 +26,18 @@ function getAllCustomers(): Promise<ICustomer[]> {
   return customerRepo.getByEmailAndPassword(customer);
 }
 
+/**
+ * sign in customer
+ */
+ function findCustomerByEmail(email: string): Promise<ICustomer | null> {
+  return customerRepo.getByEmail(email);
+}
+
 // **** Export default **** //
 
 export default {
   getAllCustomers,
   saveCustomer,
-  signInCustomer
+  signInCustomer,
+  findCustomerByEmail
 } as const;
