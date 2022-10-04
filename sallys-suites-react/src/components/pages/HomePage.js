@@ -1,10 +1,13 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useReducer, useState } from "react"
+import { customerReducer, initialCustomer } from "../../reducer/userReducer";
 import Header from "../reusables/Header"
 
 
 const HomePage = () => {
 
+    const [customerR, dispatch] = useReducer(customerReducer, initialCustomer);
+    
     const [customer, setCustomer] = useState({})
 
     useEffect(() => {

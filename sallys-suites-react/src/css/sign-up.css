@@ -1,7 +1,6 @@
 .sign-up-box {
     background-color: linen;
-    height: 500px;
-    width: 800px;
+    padding: 20px;
     margin: auto;
     border-radius: 15px;
 }

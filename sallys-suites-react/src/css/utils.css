@@ -1,0 +1,39 @@
+.content-center {
+    justify-content: center;
+}
+
+.content-right {
+    justify-content: right;
+}
+
+.content-left {
+    justify-content: left;
+}
+
+.align-center {
+    align-content: center;
+}
+
+.align-right {
+    align-content: right;
+}
+
+.align-left {
+    align-content: left;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.third-width {
+    width: 33%;
+}
+
+.quarter-width {
+    width: 25%;
+}

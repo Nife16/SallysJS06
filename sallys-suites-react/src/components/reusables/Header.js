@@ -10,15 +10,13 @@ const Header = (props) => {
     const displayRightButtons = () => {
 
         const signOut = () => {
-            localStorage.removeItem('email')
-            props.setCustomer({
-                
-            })
+            localStorage.removeItem('agentEmail')
+            localStorage.removeItem('customerEmail')
             navigator('/')
         }
 
 
-        if (localStorage.getItem("email") !== null) {
+        if (localStorage.getItem("agentEmail") !== null || localStorage.getItem("customerEmail") !== null) {
             return (
                 <div className="header-right">
                     <Button

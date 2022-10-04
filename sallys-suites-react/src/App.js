@@ -5,6 +5,8 @@ import AgentProfile from './components/pages/AgentProfile';
 import {Routes, Route} from 'react-router-dom'
 
 function App() {
+
+  
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
