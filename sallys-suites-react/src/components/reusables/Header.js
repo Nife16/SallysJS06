@@ -1,11 +1,11 @@
 import { Button } from "@mui/material"
 import { useNavigate } from "react-router"
-
+import { useSelector } from 'react-redux'
 
 const Header = (props) => {
 
     const navigator = useNavigate()
-
+    const user = useSelector(state => state.user)
 
     const displayRightButtons = () => {
 
@@ -15,8 +15,11 @@ const Header = (props) => {
             navigator('/')
         }
 
+        
+        console.log("HERE")
 
-        if (localStorage.getItem("agentEmail") !== null || localStorage.getItem("customerEmail") !== null) {
+        if (user.id !== null) {
+
             return (
                 <div className="header-right">
                     <Button

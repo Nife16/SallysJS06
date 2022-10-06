@@ -2,29 +2,37 @@ import axios from "axios"
 import { CircularProgress } from '@mui/material';
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
+import { useSelector, useDispatch } from 'react-redux'
 import Header from "../reusables/Header"
 import '../../css/agent-profile.css'
 import PropertyForm from "../reusables/property-form"
+import { gotUser } from "../../redux/slices/userSlice";
 
 const AgentProfile = () => {
 
     const [toggleReload, setToggleReload] = useState(true)
     const [isLoading, setIsLoading] = useState(true)
     const [agent, setAgent] = useState({})
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.user.user)
     const navigator = useNavigate()
 
     useEffect(() => {
         if (localStorage.getItem("agentEmail") !== null) {
 
-            const email = localStorage.getItem("agentEmail")
+            if ((user.id == null)) {
 
-            axios.get(`http://localhost:3000/api/agent/findByEmail/${email}`)
-                .then((response) => {
-                    setIsLoading(false)
-                    setAgent(response.data.agent)
-                }).catch((error) => {
-                    console.log(error)
-                })
+                const email = localStorage.getItem("agentEmail")
+
+                axios.get(`http://localhost:3000/api/agent/findByEmail/${email}`)
+                    .then((response) => {
+                        setIsLoading(false)
+                        dispatch(gotUser(response.data.agent))
+                        setAgent(response.data.agent)
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+            }
 
         } else {
             navigator('/')
@@ -33,12 +41,12 @@ const AgentProfile = () => {
 
     const displayExistingProperties = () => {
 
-        if (agent.propertys) {
-            return agent.propertys.map((property) => {
+        if (user.propertys) {
+            return user.propertys.map((property) => {
                 return (
                     <PropertyForm
                         key={property.id}
-                        agent={agent}
+                        agent={user}
                         toggleReload={toggleReload}
                         setToggleReload={setToggleReload}
                         property={property}

@@ -1,18 +1,17 @@
-import React, {createContext} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { StepContext } from '@mui/material';
+import store from './redux/Store'
+import { Provider } from 'react-redux'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-
-
 root.render(
-  <Context.Provider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <Provider store={store}>
       <App />
-    </BrowserRouter>
-  </Context.Provider>
+    </Provider>
+  </BrowserRouter>
 );

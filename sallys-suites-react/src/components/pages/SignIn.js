@@ -6,13 +6,11 @@ import axios from "axios";
 import '../../css/sign-up.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
-import { initialCustomer, customerReducer } from "../../reducer/userReducer";
 
 const SignIn = () => {
 
     const navigator = useNavigate()
 
-    const [customer, dispatch] = useReducer(customerReducer, initialCustomer);
     const [user, setUser] = useState({
         email: "",
         password: ""
@@ -45,7 +43,6 @@ const SignIn = () => {
                 axios.post("http://localhost:3000/api/agent/signIn", { agent: user })
                 .then((response) => {
                     localStorage.setItem("agentEmail", response.data.agent.email)
-                    dispatch({type: "ADD_CUSTOMER", agent: response.data.agent})
                     setInvalidLoginMessage({
                         isError: true,
                         message: ""
@@ -115,7 +112,6 @@ const SignIn = () => {
     return (
         <div className="flex-col full-view">
             <Header />
-            {customer.name}
             <div className="full-view flex-row justify-center">
                 <div className="flex-col">
                     <div className="sign-up-box flex-col content-center">

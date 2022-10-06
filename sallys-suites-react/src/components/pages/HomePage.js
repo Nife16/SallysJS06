@@ -1,23 +1,24 @@
 import axios from "axios"
-import { useEffect, useReducer, useState } from "react"
-import { customerReducer, initialCustomer } from "../../reducer/userReducer";
+import { useEffect, useState } from "react"
 import Header from "../reusables/Header"
-
+import { useDispatch } from 'react-redux'
+import { gotUser } from "../../redux/slices/userSlice"
 
 const HomePage = () => {
-
-    const [customerR, dispatch] = useReducer(customerReducer, initialCustomer);
     
-    const [customer, setCustomer] = useState({})
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        if(localStorage.getItem("email") !== null) {
+        if(
+            localStorage.getItem("agentEmail") !== null ||
+            localStorage.getItem("customerEmail") !== null
+            ) {
 
-            const email = localStorage.getItem("email")
+            const email = localStorage.getItem("agentEmail")
 
-            axios.get(`http://localhost:3000/api/customer/findByEmail/${email}`)
+            axios.get(`http://localhost:3000/api/agent/findByEmail/${email}`)
                 .then((response) => {
-                    setCustomer(response.data)
+                    dispatch(gotUser(response.data.agent))
                 }).catch((error) => {
                     console.log(error)
                 })
@@ -27,7 +28,7 @@ const HomePage = () => {
 
     return (
         <div className="flex-col full-view">
-            <Header setCustomer={setCustomer} />
+            <Header />
             <div className="main-content flex-row">
                 <div className="flex-col justify-center">
                     <img className="lebron-james" src="https://i.ytimg.com/vi/LfdWQnEYC_M/maxresdefault.jpg" />
