@@ -1,0 +1,12 @@
+.listings-tem-box {
+    flex-wrap: wrap;
+    width: 300px;
+    height: 300px;
+    border-color: white;
+    border-style: solid;
+}
+
+.house-image {
+    height: 100px;
+    width: 150px;
+}
