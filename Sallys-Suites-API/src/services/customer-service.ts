@@ -1,5 +1,6 @@
 import customerRepo from '@repos/customer-repo';
-import ICustomer  from '@models/customer';
+import ICustomer from '@models/customer';
+import bcrypt from 'bcryptjs'
 import { UserNotFoundError } from '@shared/errors';
 
 
@@ -15,21 +16,35 @@ function getAllCustomers(): Promise<ICustomer[]> {
 /**
  * save customer
  */
- function saveCustomer(customer: ICustomer): Promise<ICustomer> {
+function saveCustomer(customer: ICustomer): Promise<ICustomer> {
   return customerRepo.save(customer);
 }
 
 /**
  * sign in customer
  */
- function signInCustomer(customer: ICustomer): Promise<ICustomer | null> {
-  return customerRepo.getByEmailAndPassword(customer);
+async function signInCustomer(customer: ICustomer): Promise<ICustomer | null> {
+
+  const persistedCustomer: ICustomer | null = await customerRepo.getByEmail(customer.email)
+
+  if (persistedCustomer !== null) {
+
+    if (await bcrypt.compare(customer.password, persistedCustomer.password)) {
+
+      return persistedCustomer
+
+    }
+
+  } 
+  
+  return null
+
 }
 
 /**
  * sign in customer
  */
- function findCustomerByEmail(email: string): Promise<ICustomer | null> {
+function findCustomerByEmail(email: string): Promise<ICustomer | null> {
   return customerRepo.getByEmail(email);
 }
 

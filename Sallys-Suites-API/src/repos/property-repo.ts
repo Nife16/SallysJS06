@@ -15,6 +15,7 @@ async function getAll(): Promise<IProperty[]> {
         include: {
             address: true
         }
+
     })
 
 }

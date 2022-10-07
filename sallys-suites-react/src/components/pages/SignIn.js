@@ -6,6 +6,7 @@ import axios from "axios";
 import '../../css/sign-up.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
+import bcrypt from 'bcryptjs'
 
 const SignIn = () => {
 
@@ -37,24 +38,23 @@ const SignIn = () => {
 
             setPasswordLengthCheck(true)
 
-
             if (isAgent) {
 
                 axios.post("http://localhost:3000/api/agent/signIn", { agent: user })
-                .then((response) => {
-                    localStorage.setItem("agentEmail", response.data.agent.email)
-                    setInvalidLoginMessage({
-                        isError: true,
-                        message: ""
+                    .then((response) => {
+                        localStorage.setItem("agentEmail", response.data.agent.email)
+                        setInvalidLoginMessage({
+                            isError: true,
+                            message: ""
+                        })
+                        //navigator('/')
+                    }).catch((error) => {
+                        console.log(error.response.data.message)
+                        setInvalidLoginMessage({
+                            isError: false,
+                            message: error.response.data.message
+                        })
                     })
-                    //navigator('/')
-                }).catch((error) => {
-                    console.log(error.response.data.message)
-                    setInvalidLoginMessage({
-                        isError: false,
-                        message: error.response.data.message
-                    })
-                })
 
             } else {
 

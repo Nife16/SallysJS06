@@ -4,13 +4,13 @@
 }
 
 .header-right {
-    width: 100%;
+    width: 43%;
     justify-content: right;
 }
 
 .logo {
     height: 100%;
-    width: auto;
+    width: 43%;
 }
 
 .header-links {
@@ -21,4 +21,22 @@
 
 .header-links:hover {
     text-decoration: underline;
+}
+
+.listings-link {
+    background-color: linen;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 20px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.listings-link:hover {
+    background-color: antiquewhite;
+    text-decoration: none;
+    color: black
 }

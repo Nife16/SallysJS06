@@ -6,6 +6,7 @@ import axios from "axios";
 import '../../css/sign-up.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
+import bcrypt from 'bcryptjs'
 
 const SignUp = () => {
 
@@ -43,6 +44,11 @@ const SignUp = () => {
             setPasswordLengthCheck(true)
 
             if(customer.password === customer.confirmPassword  ) {
+
+                var salt = bcrypt.genSaltSync(10);
+
+                customer.password = bcrypt.hashSync(customer.password, salt);
+
                 axios.post("http://localhost:3000/api/customer/signUp", { customer: customer })
                 .then((response) => {
                     setErrorObj({
@@ -50,7 +56,7 @@ const SignUp = () => {
                         helperText: ""
                     })
                     setPasswordLengthCheck(true)
-                    localStorage.setItem("email", response.data.customer.email)
+                    localStorage.setItem("customerEmail", response.data.customer.email)
                     navigator('/')
                 }).catch((error) => {
                     console.log(error)
