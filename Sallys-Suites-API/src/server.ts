@@ -17,7 +17,6 @@ import cors from 'cors'
 
 const app = express();
 
-
 // **** Set basic express settings **** //
 
 // Common middlewares
@@ -27,6 +26,8 @@ app.use(cookieParser());
 app.use(cors({
   origin: '*'
 }));
+
+
 
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
@@ -56,18 +57,18 @@ app.use((err: Error | CustomError, _: Request, res: Response, __: NextFunction) 
 
 // **** Serve front-end content **** //
 
-// Set views dir
-const viewsDir = path.join(__dirname, 'views');
-app.set('views', viewsDir);
+// // Set views dir
+// const viewsDir = path.join(__dirname, 'views');
+// app.set('views', viewsDir);
 
-// Set static dir
-const staticDir = path.join(__dirname, 'public');
-app.use(express.static(staticDir));
+// // Set static dir
+// const staticDir = path.join(__dirname, 'public');
+// app.use(express.static(staticDir));
 
-// Serve index.html file
-app.get('*', (_: Request, res: Response) => {
-  res.sendFile('index.html', {root: viewsDir});
-});
+// // Serve index.html file
+// app.get('*', (_: Request, res: Response) => {
+//   res.sendFile('index.html', {root: viewsDir});
+// });
 
 
 // **** Export default **** //

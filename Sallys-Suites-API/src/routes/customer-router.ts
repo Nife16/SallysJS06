@@ -1,5 +1,7 @@
 import StatusCodes from 'http-status-codes';
-import { Request, Response, Router } from 'express';
+import { Request, Response, Router, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 import { ParamMissingError } from '@shared/errors';
 import customerService from '@services/customer-service';
@@ -12,14 +14,12 @@ import ICustomer from '@models/customer';
 const router = Router();
 const { CREATED, OK, BAD_REQUEST } = StatusCodes;
 
-
-
 // **** Routes **** //
 
 /**
  * Get all customers
  */
-router.get('/getAll', async (_: Request, res: Response) => {
+router.get('/getAll', authenticateToken, async (_: Request, res: Response) => {
 
     const allCustomers = await customerService.getAllCustomers()
    
@@ -33,9 +33,11 @@ router.get('/getAll', async (_: Request, res: Response) => {
 
     const { customer } = req.body
 
-    const savedCustomer = await customerService.saveCustomer(customer)
+    //const savedCustomer = await customerService.saveCustomer(customer)
+
+    const token = generateAccessToken("savedCustomer.email")
    
-    return res.status(OK).json({customer: savedCustomer});
+    return res.status(OK).json({token: token});
 });
 
 /**
@@ -69,6 +71,39 @@ router.get('/getAll', async (_: Request, res: Response) => {
    
     return res.status(OK).json({customer: signedInCustomer});
 });
+
+
+// get config vars
+dotenv.config();
+
+// access config var
+const secret: any = process.env.SECRET;
+
+
+function generateAccessToken(email: string) {
+    return jwt.sign({email: email}, secret,  {expiresIn: '1h'});
+}
+
+export function authenticateToken(req: Request, res: Response, next: NextFunction) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader
+
+    console.log(authHeader)
+  
+    if (token == null) return res.sendStatus(401)
+  
+    jwt.verify(token, process.env.SECRET as string, (err: any, customer: any) => {
+      console.log(err)
+  
+      if (err) return res.sendStatus(403)
+  
+      req.body = {customer}
+  
+      console.log(customer)
+      next()
+    })
+  }
+
 
 
 

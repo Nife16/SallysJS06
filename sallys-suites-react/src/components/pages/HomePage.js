@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import Header from "../reusables/Header"
 import { useDispatch, useSelector } from 'react-redux'
 import { gotUser } from "../../redux/slices/userSlice"
+import '../../css/scss/homepage.scss'
 
 const HomePage = () => {
     
@@ -45,13 +46,25 @@ const HomePage = () => {
         }
     }
 
+    const displayMobilListingLink = () => {
+
+        return (
+            <h2>
+                <a className="listings-link-mobile">View our Dream Homes!!!</a>
+            </h2>
+        )
+
+    }
+
     return (
         <div className="flex-col full-view">
             <Header />
             <div className="main-content flex-row">
                 <div className="flex-col justify-center">
+                    {displayMobilListingLink()}
                     <img className="lebron-james" src="https://i.ytimg.com/vi/LfdWQnEYC_M/maxresdefault.jpg" />
-                    <p>Imagine living the life of LEBRON JAMES! Let Sallys Suites find your dream Home too!</p>
+                    <p className="text-center">Imagine living the life of LEBRON JAMES!</p>
+                    <p>Let Sallys Suites find your dream Home too!</p>
                     {displayUserData()}
                 </div>
             </div>

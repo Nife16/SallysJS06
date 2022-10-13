@@ -1,8 +1,7 @@
 @import url('./App.css');
-@import url('./css/header.css');
-@import url('./css/homepage.css');
 @import url('./css/flex.css');
 @import url('./css/utils.css');
+
 body {
   margin: 0;
   height: 100vh;

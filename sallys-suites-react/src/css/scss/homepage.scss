@@ -1,0 +1,42 @@
+
+.lebron-james {
+    height: 500px;
+    width: 800px;
+}
+
+h2 {
+    margin-bottom: 60px;
+}
+
+.listings-link-mobile {
+    display: none;
+}
+
+@media screen and (max-width: 850px) {
+    .lebron-james {
+        height: 300px;
+        width: 480px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    
+    .lebron-james {
+        height: 250px;
+        width: 350px;
+    }
+
+    .listings-link-mobile {
+        display: flex;
+        margin: auto 30px;
+        text-decoration: none;
+        color: black;
+    }
+    
+    .listings-link-mobile:hover {
+        display: flex;
+        text-decoration: underline;
+        color: black
+    }
+
+}

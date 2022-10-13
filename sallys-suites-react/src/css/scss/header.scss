@@ -1,0 +1,75 @@
+@use 'modules/colors' as *;
+
+@import url('./check.css');
+
+.header {
+    height: 80px;
+    background-color: $SallysLinen;
+    
+    .logo {
+        height: 100%;
+        width: 43%;
+    }
+}
+
+hr {
+    background-color: black;
+    border-style: none;
+    width: 2px;
+    height: 50px;
+    display: flex;
+    margin: auto 0;
+}
+
+.header-right {
+    width: 43%;
+    justify-content: right;
+}
+
+
+.header-links {
+    margin: auto 30px;
+    text-decoration: none;
+    color: black;
+}
+
+.header-links:hover {
+    text-decoration: underline;
+}
+
+.listings-link:hover {
+    background-color: antiquewhite;
+    text-decoration: none;
+    color: black
+}
+
+
+@media screen and (max-width: 500px) {
+    
+    .listings-link {
+        display:none;
+    }
+
+    .header-right {
+        width: 50%;
+        justify-content: right;
+    }
+
+    .header {
+        height: 80px;
+        background-color: $SallysLinen;
+        
+        .logo {
+            height: 100%;
+            width: 50%;
+        }
+    }
+
+    .header-links {
+        margin: auto 30px;
+        text-decoration: none;
+        color: black;
+        width: 50%;
+    }
+
+}

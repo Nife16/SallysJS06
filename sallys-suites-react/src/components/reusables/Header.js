@@ -2,9 +2,9 @@ import { Button } from "@mui/material"
 import { useNavigate } from "react-router"
 import { useSelector, useDispatch } from 'react-redux'
 import { logOut } from "../../redux/slices/userSlice";
+import '../../css/scss/header.scss'
 
 const Header = (props) => {
-
     
     const dispatch = useDispatch()
     const navigator = useNavigate()
@@ -38,6 +38,7 @@ const Header = (props) => {
             return (
                 <div className="header-right">
                     <a href="/sign-up" className="header-links">Sign Up</a>
+                    <hr />
                     <a href="/sign-in" className="header-links">Sign In</a>
                 </div>
             )

@@ -9,7 +9,6 @@ import Listings from './components/pages/Listings';
 
 function App() {
 
-
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
