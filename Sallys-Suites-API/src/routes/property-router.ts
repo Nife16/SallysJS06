@@ -3,6 +3,7 @@ import { Request, Response, Router } from 'express';
 
 import { ParamMissingError } from '@shared/errors';
 import propertyService from '@services/property-service';
+import basketBallService from '@services/other-api-service';
 import IProperty from '@models/property';
 
 
@@ -16,10 +17,21 @@ const { CREATED, OK, BAD_REQUEST } = StatusCodes;
 
 // **** Routes **** //
 
+
 /**
  * Get all propertys
  */
-router.get('/getAll', async (_: Request, res: Response) => {
+ router.get('/getAllBasketBall', async (_: Request, res: Response) => {
+
+    const data = await basketBallService.getBasketBallData()
+   
+    return res.status(OK).json({bballData: data});
+});
+
+/**
+ * Get all propertys
+ */
+ router.get('/getAll', async (_: Request, res: Response) => {
 
     const allPropertys = await propertyService.getAllPropertys()
    

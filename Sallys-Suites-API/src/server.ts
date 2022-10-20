@@ -2,6 +2,8 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import path from 'path';
 import helmet from 'helmet';
+import { buildSchema } from "graphql"
+import { graphqlHTTP } from "express-graphql"
 
 import express, { NextFunction, Request, Response } from 'express';
 import StatusCodes from 'http-status-codes';
@@ -12,6 +14,9 @@ import logger from 'jet-logger';
 import { CustomError } from '@shared/errors';
 import cors from 'cors'
 
+import { getUser, getUsers, createUser } from '@routes/customer-resolver';
+import { getAgent, getAgents } from '@routes/agent-resolver';
+
 
 // **** Variables **** //
 
@@ -21,7 +26,7 @@ const app = express();
 
 // Common middlewares
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
   origin: '*'
@@ -42,8 +47,83 @@ if (process.env.NODE_ENV === 'production') {
 
 // **** Add API Routes ****# //
 
+
+// **** GRAPHQL ****** //
+
+const schema = buildSchema(`
+    input String {
+        email: String!
+        name: String!
+
+    }
+
+    type Customer {
+      id: String!,
+      name: String!,
+      email: String!,
+      password: String!,
+      phoneNumber: String!,
+      propertys: [Property]!
+    }
+
+    type Agent {
+      id: String!,
+      name: String!,
+      email: String!,
+      password: String!,
+      phoneNumber: String!,
+      propertys: [Property]!
+    }
+
+    type Property {
+      id: String!,
+      price: Float!,
+      beds: Int!,
+      baths: Int!,
+      squareFeet: Int!,
+      isOnMarket: Boolean!
+    }
+
+    input ICustomer {
+      id: String,
+      name: String!,
+      email: String!,
+      password: String!,
+      phoneNumber: String!
+    }
+
+    type Mutation {
+        createUser(customer: ICustomer): Customer
+        updateUser(customer: ICustomer): Customer
+    }
+
+    type Query {
+        getUser(email: String): Customer
+        getAgent(email: String): Customer
+        getUsers: [Customer]
+    }
+`)
+
+const root = {
+  getUser,
+  getUsers,
+  getAgent,
+  getAgents,
+  createUser,
+  // updateUser,
+}
+
+
 // Add api router
 app.use('/api', apiRouter);
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  })
+)
 
 // Error handling
 app.use((err: Error | CustomError, _: Request, res: Response, __: NextFunction) => {
@@ -65,7 +145,7 @@ app.use((err: Error | CustomError, _: Request, res: Response, __: NextFunction) 
 // const staticDir = path.join(__dirname, 'public');
 // app.use(express.static(staticDir));
 
-// // Serve index.html file
+// // Serve index.html `fi`le
 // app.get('*', (_: Request, res: Response) => {
 //   res.sendFile('index.html', {root: viewsDir});
 // });

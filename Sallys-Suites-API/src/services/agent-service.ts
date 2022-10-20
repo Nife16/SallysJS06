@@ -1,6 +1,7 @@
 import agentRepo from '@repos/agent-repo';
 import IAgent from '@models/agent';
 import { UserNotFoundError } from '@shared/errors';
+import otherApiService from './other-api-service';
 
 
 // **** Functions **** //
@@ -9,6 +10,13 @@ import { UserNotFoundError } from '@shared/errors';
  * Get all agents
  */
 function getAllAgents(): Promise<IAgent[]> {
+
+    //const {agent} = req.body
+
+    const data = otherApiService.getBasketBallData()
+
+    //agent.stuff = data.stuff
+    //agentService.save(agent)
     return agentRepo.getAll();
 }
 
