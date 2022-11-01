@@ -16,6 +16,8 @@ function App() {
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/agent-profile" element={<AgentProfile />} />
       <Route path="/listings" element={<Listings />} />
+      <Route path="/404" element={<NotFound />} />
+      <Route path="*" element={ <Navigate to="/404" replace />} />
     </Routes>
 
   );
